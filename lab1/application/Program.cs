@@ -11,10 +11,8 @@ namespace application
     {
         static void Main(string[] args)
         {
-            struct data{
-        };
             Storage storage = new Storage();
-            List myList = storage.read();
+            Data myData = storage.read();
             //Application app = new Application();
             //int op;
             //do
@@ -38,7 +36,8 @@ namespace application
             //    }
 
             //} while (op != 99);
-            //storage.save(myList);
+            storage.save(myData);
+            Console.ReadLine();
         }
     }
 }

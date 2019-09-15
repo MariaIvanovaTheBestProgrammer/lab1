@@ -14,6 +14,7 @@ namespace models
         {
             if (firstName == "" || firstName == null) { throw new ArgumentException("First name cannot be empty!"); }
         }
+
     }
 
 }
