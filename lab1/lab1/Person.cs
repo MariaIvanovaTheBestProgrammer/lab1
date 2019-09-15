@@ -4,12 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace lab1
+namespace models
 {
-    class Person
+    public class Person
     {
-        private string firstName { get; set; }
-        private string lastName { get; set; }
-        private string hobby { get; set; }
+        public string firstName { get; set; }
+        public string lastName { get; set; }
+        public void validate()
+        {
+            if (firstName == "" || firstName == null) { throw new ArgumentException("First name cannot be empty!"); }
+        }
     }
+
 }

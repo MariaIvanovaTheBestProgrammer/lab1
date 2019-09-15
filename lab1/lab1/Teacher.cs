@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace models
 {
-    class Program
+    public class Teacher : Person
     {
-        static void Main(string[] args)
+        public string Teach()
         {
+            return "i'm teaching";
         }
     }
 }
