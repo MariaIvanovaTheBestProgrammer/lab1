@@ -14,13 +14,12 @@ namespace application
         {
             //Console.Clear();
             Console.WriteLine("1 - Додати особу ");
-            Console.WriteLine("2 - Видалити особу ");
-            Console.WriteLine("3 - Знайти всіх студентів, які навчаються на 2му курсі ");
-            Console.WriteLine("4 - Вивести список ");
+            Console.WriteLine("2 - Знайти всіх студентів, які навчаються на 2му курсі ");
+            Console.WriteLine("3 - Вивести список ");
             Console.WriteLine("99 - exit: ");
             return Convert.ToInt32(Console.ReadLine());
         }
-        public void add(List list)
+        public void add(Data data)
         {
             Console.Clear();
             Console.WriteLine("1 - Додати студента ");
@@ -28,12 +27,30 @@ namespace application
             Console.WriteLine("3 - Додати водія ");
             Console.WriteLine("99 - exit: ");
             int op = Convert.ToInt32(Console.ReadLine());
-            if (op == 1) this.addStudent(list);
-            if (op == 2) this.addTeacher(list);
-            if (op == 3) this.addDriver(list);
+            if (op == 1) this.addStudent(data);
+            if (op == 2) this.addTeacher(data);
+            if (op == 3) this.addDriver(data);
             return;
         }
-        private void addStudent(List list)
+        public void getSportStudents(Data data)
+        {
+
+            for (int i = 0; i < data.getStudentsCount(); i++)
+            {
+                if (data.getStudent(i).hobby == "sport" && data.getStudent(i).course == 2)
+                {
+                    Console.Write("| ");
+                    Console.Write(i);
+                    Console.Write(" | ");
+                    Console.Write(data.getStudent(i).firstName);
+                    Console.Write(" | ");
+                    Console.Write(data.getStudent(i).lastName);
+                    Console.Write(" | ");
+                    Console.WriteLine(" | ");
+                }
+            }
+        }
+        private void addStudent(Data data)
         {
             Console.Clear();
             try
@@ -52,7 +69,7 @@ namespace application
                 Console.Write("Введіть ID студента: ");
                 student.idNumber = Console.ReadLine();
                 student.validate();
-                list.pushBack(new Node(student));
+                data.addStudent(student);
             } catch(Exception e)
             {
                 Console.WriteLine(e.Message);
@@ -61,7 +78,7 @@ namespace application
             }
 
         }
-        private void addTeacher(List list)
+        private void addTeacher(Data data)
         {
             Console.Clear();
             Teacher teacher = new Teacher();
@@ -72,7 +89,7 @@ namespace application
             try 
             {
                 teacher.validate();
-                list.pushBack(new Node(teacher));
+                data.addTeacher(teacher);
             } catch (Exception e)
             {
                 Console.WriteLine(e.Message);
@@ -80,7 +97,7 @@ namespace application
                 Console.ReadLine();
             }
         }
-        private void addDriver(List list)
+        private void addDriver(Data data)
         {
             Console.Clear();
             TaxiDriver taxiDriver = new TaxiDriver();
@@ -91,7 +108,7 @@ namespace application
             try
             {
                 taxiDriver.validate();
-                list.pushBack(new Node(taxiDriver));
+                data.addTaxiDriver(taxiDriver);
             }
             catch (Exception e)
             {
@@ -100,34 +117,52 @@ namespace application
                 Console.ReadLine();
             }
         }
-        public void delPerson(List list)
-        {
-            Console.Clear();
-            Console.Write("Введіть #): ");
-            uint index = Convert.ToUInt32(Console.ReadLine());
-            list.deleteSymbol(index);
-        }
         
-        public void printList(List list)
+        public void printData(Data data)
         {
             Console.Clear();
             Console.WriteLine("------------------------------");
             Console.WriteLine("| # |   first name   |  last name |  |");
             Console.WriteLine("------------------------------");
-            if (!list.isEmpty())
+            if (!data.isEmpty())
             {
                 int count = 0;
-                foreach (Node node in list)
+                for (int i = 0; i < data.getStudentsCount(); i++)
                 {
                     Console.Write("| ");
                     Console.Write(count++);
                     Console.Write(" | ");
-                    Console.Write(node.MyPerson.firstName);
+                    Console.Write(data.getStudent(i).firstName);
                     Console.Write(" | ");
-                    Console.Write(node.MyPerson.lastName);
+                    Console.Write(data.getStudent(i).lastName);
                     Console.Write(" | ");
                     Console.WriteLine(" | ");
                 }
+                for (int i = 0; i < data.getTeachersCount(); i++)
+                {
+
+                    Console.Write("| ");
+                    Console.Write(count++);
+                    Console.Write(" | ");
+                    Console.Write(data.getTeacher(i).firstName);
+                    Console.Write(" | ");
+                    Console.Write(data.getTeacher(i).lastName);
+                    Console.Write(" | ");
+                    Console.WriteLine(" | ");
+                }
+                for (int i = 0; i < data.getTaxiDriverCount(); i++)
+                {
+
+                    Console.Write("| ");
+                    Console.Write(count++);
+                    Console.Write(" | ");
+                    Console.Write(data.getTaxiDriver(i).firstName);
+                    Console.Write(" | ");
+                    Console.Write(data.getTaxiDriver(i).lastName);
+                    Console.Write(" | ");
+                    Console.WriteLine(" | ");
+                }
+
             }
             Console.Write("Press Eneter key to continue.. ");
             Console.ReadLine();

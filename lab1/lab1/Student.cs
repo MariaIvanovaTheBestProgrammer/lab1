@@ -12,6 +12,7 @@ namespace models
         public int course { get; set; }
         public string studentTicket { get; set; }
         public string idNumber { get; set; }
+        
         public string Study()
         {
             return "i'm studying";
@@ -23,20 +24,44 @@ namespace models
         }
         public override string ToString()
         {
+
             StringBuilder sb = new StringBuilder();
             sb.Append("Student ");
             sb.Append(firstName);
             sb.Append(lastName);
+            sb.Append(studentTicket);
+
             sb.Append(Environment.NewLine);
             sb.Append("{\"firstName\":\"");
             sb.Append(firstName);
             sb.Append("\",");
+
             sb.Append(Environment.NewLine);
             sb.Append("\"lastName\":\"");
             sb.Append(lastName);
+            sb.Append("\",");
+
+            sb.Append(Environment.NewLine);
+            sb.Append("\"studentTicket\":\"");
+            sb.Append(studentTicket);
+            sb.Append("\",");
+
+            sb.Append(Environment.NewLine);
+            sb.Append("\"course\":\"");
+            sb.Append(course);
+            sb.Append("\",");
+            sb.Append(Environment.NewLine);
+            sb.Append("\"hobby\":\"");
+            sb.Append(hobby);
+            sb.Append("\",");
+            sb.Append(Environment.NewLine);
+            sb.Append("\"studentId\":\"");
+            sb.Append(idNumber);
+
             sb.Append("\"};");
             sb.Append(Environment.NewLine);
             return sb.ToString();
+
         }
     }
 }

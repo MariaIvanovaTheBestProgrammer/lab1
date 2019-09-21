@@ -15,9 +15,6 @@ namespace database
         public Data read()
         {
             Data data = new Data();
-            data.teachers = new models.Teacher[10];
-            data.taxiDrivers = new models.TaxiDriver[10];
-            data.students = new models.Student[10];
             try
             {
                 if (!File.Exists(filePath))
@@ -28,10 +25,6 @@ namespace database
                 string text = File.ReadAllText(filePath);
                 string dataPattern = "\\s*(?<type>\\w+)\\s+\\w+\\s*{(?<data>.*)}\\s*";
                 text = Regex.Replace(text, @"\t|\n|\r", "");
-                int students = 0;
-                int teachers = 0;
-                int taxiDrivers = 0;
-
                 Regex dataRegexp = new Regex(dataPattern);
                 foreach (string line in text.Split(';'))
                 {
@@ -42,15 +35,15 @@ namespace database
                         string fields = m.Groups["data"].Captures[0].Value;
                         if (type == "Student")
                         {
-                            data.students[students++] = this.readStudent(fields);
+                            data.addStudent(this.readStudent(fields));
                         }
                         if (type == "Teacher")
                         {
-                            data.teachers[teachers++] = this.readTeacher(fields);
+                            data.addTeacher(this.readTeacher(fields));
                         }
                         if (type == "TaxiDriver")
                         {
-                            data.taxiDrivers[taxiDrivers++] = this.readTaxiDriver(fields);
+                            data.addTaxiDriver(this.readTaxiDriver(fields));
                         }
                     }
                 }
@@ -136,8 +129,7 @@ namespace database
         }
 
         public void save(Data data)
-        {
-            string line;
+        { 
             StreamWriter sw;
             try
             {
@@ -147,26 +139,20 @@ namespace database
                     sw.Close();
                 }
                 sw = new StreamWriter(new FileStream(filePath, FileMode.Create));
-                foreach (Student s in data.students)
+                for(int i=0; i< data.getStudentsCount(); i++)
                 {
-                    if (s != null)
-                    {
-                        sw.Write(s.ToString());
-                    }
+                   
+                        sw.Write(data.getStudent(i).ToString());
                 }
-                foreach (Teacher s in data.teachers)
+                for (int i = 0; i < data.getTeachersCount(); i++)
                 {
-                    if (s != null)
-                    {
-                        sw.Write(s.ToString());
-                    }
+
+                    sw.Write(data.getTeacher(i).ToString());
                 }
-                foreach (TaxiDriver s in data.taxiDrivers)
+                for (int i = 0; i < data.getTaxiDriverCount(); i++)
                 {
-                    if (s != null)
-                    {
-                        sw.Write(s.ToString());
-                    }
+
+                    sw.Write(data.getTaxiDriver(i).ToString());
                 }
                 sw.Close();
             }
