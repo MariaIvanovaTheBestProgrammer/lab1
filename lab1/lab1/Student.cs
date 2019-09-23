@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace models
 {
@@ -19,8 +20,11 @@ namespace models
         }
         new public void validate()
         {
+            string IDpattern = "\\s*([A-Z]{2}[0-9]{6})\\s*";
+            Regex IDRegexp = new Regex(IDpattern);
+            Match m = IDRegexp.Match(IDpattern);
             if (firstName == "" || firstName == null) { throw new ArgumentException("First name cannot be empty!"); }
-            if (studentTicket == "" || studentTicket == null) { throw new ArgumentException("First name cannot be empty!"); }
+            if (studentTicket == "" || studentTicket == null || !m.Success) { throw new ArgumentException("Wrong form of student ticket!"); }
         }
         public override string ToString()
         {
