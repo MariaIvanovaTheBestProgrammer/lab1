@@ -20,7 +20,7 @@ namespace models
         }
         new public void validate()
         {
-            string IDpattern = "\\s*([A-Z]{2}[0-9]{6})\\s*";
+            string IDpattern = "([A-Z]{2}[0-9]{6})";
             Regex IDRegexp = new Regex(IDpattern);
             Match m = IDRegexp.Match(IDpattern);
             if (firstName == "" || firstName == null) { throw new ArgumentException("First name cannot be empty!"); }
